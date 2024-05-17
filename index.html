@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleção de Cidades e Envie uma Notificação</title>
+    <!-- Incluindo o Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .bootstrap-tagsinput {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="container">
+    <h1 class="mt-5">Selecione as Cidades e Envie uma Notificação</h1>
+
+    <div>
+        <p>Indique se você quer aplicar a Line ou Estabelecimento ou ambos</p>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" />
+            <label class="form-check-label" for="flexSwitchCheckDefault">Line</label>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked />
+            <label class="form-check-label" for="flexSwitchCheckChecked">Estabelecimento</label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="cityChecklist">Selecione as cidades para as quais as mensagens serão enviadas:</label>
+        <div id="cityChecklist"></div>
+    </div>
+
+    <div class="form-group">
+        <input type="text" id="titleInput" class="form-control" placeholder="Digite o título aqui" />
+    </div>
+
+    <div class="form-group">
+        <textarea id="messageInput" class="form-control" placeholder="Digite sua mensagem aqui"></textarea>
+    </div>
+
+    <button id="notifyBtn" class="btn btn-primary">Enviar Notificação</button>
+    <div id="response"></div>
+
+    <!-- Incluindo o jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Incluindo o Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- Incluindo o script customizado -->
+    <script src="script.js"></script>
+</body>
+</html>
