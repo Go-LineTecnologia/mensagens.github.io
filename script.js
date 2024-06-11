@@ -1,12 +1,10 @@
-LINE_DOMAIN_API: "https://line-hml-8a44d.rj.r.appspot.com";
+const LINE_DOMAIN_API = "https://line-hml-8a44d.rj.r.appspot.com";
 
 document.addEventListener("DOMContentLoaded", function () {
   fetch("https://line-b0ebd.rj.r.appspot.com/cities")
     .then((response) => response.json())
     .then((cities) => {
-      const validCities = cities.filter(
-        (city) => city !== null && city !== undefined
-      ); // Filtra valores nulos
+      const validCities = cities.filter(city => city !== null && city !== undefined); // Filtra valores nulos
       initializeCities(validCities);
     })
     .catch((error) => {
@@ -14,40 +12,63 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
   function initializeCities(cities) {
-    var cityChecklistDiv = $("#cityChecklist");
+    const cityChecklistDiv = $("#cityChecklist");
 
     cities.forEach(function (city) {
-      var checkboxHtml = `
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="${city}">
-                    <label class="form-check-label" for="${city}">${city}</label>
-                </div>`;
+      const checkboxHtml = `
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="${city}">
+            <label class="form-check-label" for="${city}">${city}</label>
+        </div>`;
       cityChecklistDiv.append(checkboxHtml);
     });
   }
 
+  $("input[name='option']").change(function () {
+    const selectedOption = $("input[name='option']:checked").val();
+    if (selectedOption === "Individual") {
+      $("#citySelection").hide();
+      $("#emailInputDiv").show();
+    } else {
+      $("#citySelection").show();
+      $("#emailInputDiv").hide();
+    }
+  });
+
   $("#notifyBtn").click(function () {
-    var title = $("#titleInput").val();
-    var body = $("#messageInput").val();
-    const isLinerChecked = $("#flexSwitchCheckDefault").prop("checked");
-    const isEstabelecimentoChecked = $("#flexSwitchCheckChecked").prop(
-      "checked"
-    );
+    const title = $("#titleInput").val();
+    const body = $("#messageInput").val();
+    const selectedOption = $("input[name='option']:checked").val();
     const selectedCities = Array.from($("#cityChecklist input:checked")).map(
       (checkbox) => checkbox.id
     );
+    const email = $("#emailInput").val();
 
     if (!title || !body) {
       alert("Por favor, preencha o título e a mensagem.");
       return;
     }
 
-    var payload = {
+    if (!selectedOption) {
+      alert("Por favor, selecione uma opção.");
+      return;
+    }
+
+    if (selectedOption === "Individual" && !email) {
+      alert("Por favor, preencha o email.");
+      return;
+    }
+
+    const isLinerChecked = selectedOption === "Line" || selectedOption === "Ambos";
+    const isEstabelecimentoChecked = selectedOption === "Estabelecimento" || selectedOption === "Ambos";
+
+    const payload = {
       title: title,
       body: body,
       isLinerChecked: isLinerChecked,
       isEstabelecimentoChecked: isEstabelecimentoChecked,
       selectedCities: selectedCities,
+      email: selectedOption === "Individual" ? email : null
     };
 
     fetch("https://line-b0ebd.rj.r.appspot.com/send", {
