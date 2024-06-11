@@ -93,4 +93,18 @@ document.addEventListener("DOMContentLoaded", function () {
         $("#response").text("Erro ao enviar notificações: " + error.message);
       });
   });
+
+  // Função para limpar todos os campos
+  $("#clearBtn").click(function () {
+    $("input[name='option']").prop("checked", false);
+    $("#titleInput").val('');
+    $("#messageInput").val('');
+    $("#cityChecklist input:checked").prop("checked", false);
+    $("#emailInput").val('');
+    $("#response").text('');
+
+    // Reseta a exibição dos campos
+    $("#citySelection").show();
+    $("#emailInputDiv").hide();
+  });
 });
