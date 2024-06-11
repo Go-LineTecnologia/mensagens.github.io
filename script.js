@@ -1,9 +1,14 @@
+console.log("script.js carregado");
+
 const LINE_DOMAIN_API = "https://line-hml-8a44d.rj.r.appspot.com";
 
 document.addEventListener("DOMContentLoaded", function () {
+  console.log("DOM completamente carregado e analisado");
+
   fetch("https://line-b0ebd.rj.r.appspot.com/cities")
     .then((response) => response.json())
     .then((cities) => {
+      console.log("Cidades recebidas:", cities);
       const validCities = cities.filter(city => city !== null && city !== undefined); // Filtra valores nulos
       initializeCities(validCities);
     })
@@ -13,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function initializeCities(cities) {
     const cityChecklistDiv = $("#cityChecklist");
+    console.log("Inicializando cidades:", cities);
 
     cities.forEach(function (city) {
       const checkboxHtml = `
@@ -70,6 +76,8 @@ document.addEventListener("DOMContentLoaded", function () {
       selectedCities: selectedCities,
       email: selectedOption === "Individual" ? email : null
     };
+
+    console.log("Enviando payload:", payload);
 
     fetch("https://line-b0ebd.rj.r.appspot.com/send", {
       method: "POST",
